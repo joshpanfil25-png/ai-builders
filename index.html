@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI / Builders — Custom AI, Shipped</title>
+<meta name="description" content="A one-person AI build studio out of Chicago. Custom AI products for real estate, finance, and SMBs. Two-week sprints. No retainers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@300;400;500;600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #0B0A08;
+  --ink-2: #121110;
+  --ink-3: #1A1814;
+  --ink-4: #221F1A;
+  --paper: #F5F0E6;
+  --paper-2: #E8E2D5;
+  --paper-dim: rgba(245, 240, 230, 0.68);
+  --paper-dimmer: rgba(245, 240, 230, 0.38);
+  --rule: rgba(245, 240, 230, 0.08);
+  --rule-strong: rgba(245, 240, 230, 0.2);
+  --amber: #E8A752;
+  --amber-2: #F4B968;
+  --amber-dim: rgba(232, 167, 82, 0.14);
+  --amber-glow: rgba(232, 167, 82, 0.35);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+*::selection { background: var(--amber); color: var(--ink); }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ----------------------------------------------------------
+   GRID BACKGROUND OVERLAY (fixed, subtle dot pattern)
+---------------------------------------------------------- */
+.grid-bg {
+  position: fixed; inset: 0;
+  background-image:
+    radial-gradient(circle at center, rgba(245,240,230,0.045) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+}
+.amber-glow {
+  position: fixed;
+  top: -10vh; right: -10vw;
+  width: 60vw; height: 60vh;
+  background: radial-gradient(circle, var(--amber-glow), transparent 60%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+.amber-glow.two {
+  top: auto; right: auto;
+  bottom: -20vh; left: -10vw;
+  width: 50vw; height: 50vh;
+  opacity: 0.3;
+}
+
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 2; }
+@media (max-width: 768px) { .wrap { padding: 0 24px; } }
+
+/* ----------------------------------------------------------
+   NAV
+---------------------------------------------------------- */
+nav.top {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 18px 0;
+  transition: background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease;
+  border-bottom: 1px solid transparent;
+}
+nav.top.scrolled {
+  background: rgba(11, 10, 8, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom-color: var(--rule);
+}
+nav.top .wrap {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.brand {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--paper);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.brand .mark {
+  width: 22px; height: 22px;
+  background: var(--paper);
+  color: var(--ink);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 600; font-style: italic;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.brand .slash { color: var(--amber); }
+
+.nav-links {
+  display: flex; align-items: center; gap: 36px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.nav-links a {
+  color: var(--paper-dim);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.nav-links a:hover { color: var(--paper); }
+.nav-cta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink) !important;
+  background: var(--paper);
+  padding: 10px 18px;
+  border-radius: 999px;
+  transition: transform 0.2s ease, background 0.2s ease;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.nav-cta:hover { background: var(--amber); transform: translateY(-1px); }
+@media (max-width: 768px) {
+  .nav-links { gap: 18px; }
+  .nav-links .desktop-only { display: none; }
+}
+
+/* ----------------------------------------------------------
+   HERO
+---------------------------------------------------------- */
+.hero {
+  min-height: 100vh;
+  padding-top: 140px; padding-bottom: 80px;
+  display: flex; align-items: center;
+  position: relative;
+}
+.hero .wrap { width: 100%; }
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-bottom: 56px;
+}
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 0 0 var(--amber-glow);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(232, 167, 82, 0.6); }
+  70% { box-shadow: 0 0 0 12px rgba(232, 167, 82, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(232, 167, 82, 0); }
+}
+.kicker .sep { color: var(--paper-dimmer); }
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(48px, 9vw, 132px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 40px;
+  font-variation-settings: "opsz" 144;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--amber);
+}
+.hero h1 .underline {
+  position: relative;
+  display: inline-block;
+}
+.hero h1 .underline::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0.08em;
+  height: 0.06em;
+  background: var(--amber);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: drawLine 1.2s 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes drawLine { to { transform: scaleX(1); } }
+
+.hero p.lead {
+  font-size: clamp(16px, 1.4vw, 20px);
+  font-weight: 400;
+  color: var(--paper-dim);
+  max-width: 620px;
+  line-height: 1.55;
+  margin-bottom: 56px;
+}
+.hero p.lead strong {
+  color: var(--paper);
+  font-weight: 500;
+}
+
+.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 16px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+  position: relative;
+}
+.btn-primary { background: var(--paper); color: var(--ink); }
+.btn-primary:hover { background: var(--amber); transform: translateY(-2px); }
+.btn-secondary { background: transparent; color: var(--paper); border-color: var(--rule-strong); }
+.btn-secondary:hover { border-color: var(--paper); transform: translateY(-2px); }
+.btn .arrow { transition: transform 0.25s ease; display: inline-block; }
+.btn:hover .arrow { transform: translateX(4px); }
+
+/* hero stats grid */
+.hero-meta {
+  margin-top: 96px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  padding-top: 32px;
+}
+.hero-meta .stat {
+  padding-right: 24px;
+  position: relative;
+}
+.hero-meta .stat + .stat { padding-left: 24px; }
+.hero-meta .stat + .stat::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 1px; background: var(--rule);
+}
+.hero-meta .num {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  margin-bottom: 8px;
+  font-variation-settings: "opsz" 144;
+  display: flex; align-items: baseline; gap: 4px;
+}
+.hero-meta .num .suffix {
+  font-size: 0.5em;
+  color: var(--amber);
+  font-style: italic;
+}
+.hero-meta .label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  line-height: 1.4;
+}
+@media (max-width: 768px) {
+  .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .hero-meta .stat { padding: 0 !important; }
+  .hero-meta .stat::before { display: none !important; }
+  .hero { padding-top: 110px; }
+}
+
+/* ----------------------------------------------------------
+   MARQUEE — tech stack scroll
+---------------------------------------------------------- */
+.marquee {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: var(--ink-2);
+  overflow: hidden;
+  padding: 28px 0;
+  position: relative; z-index: 2;
+}
+.marquee-track {
+  display: flex; gap: 60px;
+  width: max-content;
+  animation: scroll-marquee 38s linear infinite;
+}
+.marquee-item {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--paper-dim);
+  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 60px;
+}
+.marquee-item::after {
+  content: "✦";
+  color: var(--amber);
+  font-size: 12px;
+}
+.marquee-item:last-child::after { content: none; }
+@keyframes scroll-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* ----------------------------------------------------------
+   SECTION TOOLING
+---------------------------------------------------------- */
+section { position: relative; padding: 140px 0; z-index: 2; }
+@media (max-width: 768px) { section { padding: 80px 0; } }
+
+.section-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 80px; gap: 60px; flex-wrap: wrap;
+}
+.section-head .left { flex: 1; min-width: 280px; }
+.section-tag {
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 24px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.section-tag::before {
+  content: ""; width: 24px; height: 1px; background: var(--amber);
+  display: inline-block;
+}
+.section-head h2 {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(36px, 5vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  max-width: 14ch;
+  font-variation-settings: "opsz" 144;
+}
+.section-head h2 em { font-style: italic; color: var(--amber); font-weight: 300; }
+.section-head .right {
+  max-width: 420px;
+  font-size: 16px;
+  color: var(--paper-dim);
+  line-height: 1.6;
+  flex: 1; min-width: 240px;
+}
+
+/* ----------------------------------------------------------
+   BUILDS / CASE STUDIES
+---------------------------------------------------------- */
+.builds {
+  display: flex; flex-direction: column;
+  border-top: 1px solid var(--rule);
+}
+.build {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 80px 1.2fr 1fr auto;
+  gap: 40px;
+  align-items: start;
+  transition: background 0.4s ease, padding 0.4s ease;
+  position: relative;
+  cursor: default;
+}
+.build:hover { background: linear-gradient(90deg, transparent, var(--ink-3) 50%, transparent); }
+.build .idx {
+  font-family: var(--font-mono);
+  font-size: 13px; font-weight: 500;
+  color: var(--paper-dimmer);
+  letter-spacing: 0.05em;
+  padding-top: 12px;
+}
+.build .main {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.build .tag {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--amber);
+}
+.build h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 144;
+}
+.build h3 em { font-style: italic; font-weight: 300; }
+.build .desc {
+  color: var(--paper-dim);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 48ch;
+  margin-top: 4px;
+}
+.build .stack {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 6px;
+}
+.build .stack span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  padding: 4px 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+}
+.build .metric {
+  padding-top: 12px;
+}
+.build .metric .big {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(40px, 4vw, 56px);
+  line-height: 0.95;
+  color: var(--paper);
+  letter-spacing: -0.02em;
+  font-variation-settings: "opsz" 144;
+}
+.build .metric .big em {
+  font-style: italic;
+  color: var(--amber);
+  font-weight: 300;
+  font-size: 0.6em;
+  vertical-align: super;
+  margin-left: 4px;
+}
+.build .metric .small {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  margin-top: 6px;
+  max-width: 22ch;
+}
+.build .visit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--paper);
+  text-decoration: none;
+  padding: 14px 20px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  align-self: start;
+  margin-top: 8px;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  white-space: nowrap;
+}
+.build .visit:hover {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
+  transform: translateY(-2px);
+}
+.build .visit .arrow { transition: transform 0.25s ease; }
+.build .visit:hover .arrow { transform: translateX(3px) translateY(-3px); }
+
+@media (max-width: 900px) {
+  .build { grid-template-columns: 1fr; gap: 16px; padding: 32px 0; }
+  .build .idx { padding-top: 0; }
+  .build .metric { padding-top: 0; }
+  .build .visit { justify-self: start; }
+}
+
+/* ----------------------------------------------------------
+   CAPABILITIES / WHAT I BUILD
+---------------------------------------------------------- */
+.caps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+}
+.cap {
+  padding: 44px 40px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  transition: background 0.3s ease;
+}
+.cap:hover { background: var(--ink-3); }
+.cap .num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--amber);
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+}
+.cap h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  font-variation-settings: "opsz" 144;
+}
+.cap p {
+  color: var(--paper-dim);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.cap .examples {
+  margin-top: 20px;
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.cap .examples span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--paper-dimmer);
+  padding: 3px 9px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+}
+@media (max-width: 768px) { .caps-grid { grid-template-columns: 1fr; } .cap { padding: 32px 24px; } }
+
+/* ----------------------------------------------------------
+   PROCESS
+---------------------------------------------------------- */
+.process {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 40px;
+  border-top: 1px solid var(--rule);
+}
+.step {
+  padding: 40px 28px 40px 0;
+  border-right: 1px solid var(--rule);
+  position: relative;
+}
+.step:last-child { border-right: none; padding-right: 0; }
+.step .num {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: 80px;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--amber);
+  font-style: italic;
+  font-variation-settings: "opsz" 144;
+  margin-bottom: 24px;
+}
+.step h5 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+  font-variation-settings: "opsz" 144;
+}
+.step p {
+  color: var(--paper-dim);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.step .time {
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+@media (max-width: 768px) {
+  .process { grid-template-columns: 1fr; }
+  .step { border-right: none; border-bottom: 1px solid var(--rule); padding: 32px 0; }
+  .step:last-child { border-bottom: none; }
+}
+
+/* ----------------------------------------------------------
+   ABOUT (THE BUILDER)
+---------------------------------------------------------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+@media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+.about-card {
+  background: var(--ink-2);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.about-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+}
+.about-card .row {
+  display: flex; justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.about-card .row:last-child { border-bottom: none; }
+.about-card .row .k {
+  color: var(--paper-dimmer);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.about-card .row .v {
+  color: var(--paper);
+  text-align: right;
+}
+.about-card .row .v.amber { color: var(--amber); }
+.about-card .header {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.about-card .header .live {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--amber);
+}
+.about-card .header .live::before {
+  content: ""; width: 6px; height: 6px; background: var(--amber); border-radius: 50%;
+  box-shadow: 0 0 8px var(--amber);
+}
+
+.about-text h2 {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  font-variation-settings: "opsz" 144;
+}
+.about-text h2 em { font-style: italic; color: var(--amber); font-weight: 300; }
+.about-text p {
+  color: var(--paper-dim);
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.about-text p strong { color: var(--paper); font-weight: 500; }
+.about-text .sig {
+  margin-top: 32px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 24px;
+  color: var(--paper);
+  font-weight: 350;
+}
+
+/* ----------------------------------------------------------
+   CONTACT / CTA
+---------------------------------------------------------- */
+.cta {
+  position: relative;
+  padding: 160px 0;
+  text-align: center;
+  overflow: hidden;
+}
+.cta::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, var(--amber-dim), transparent 60%);
+  pointer-events: none;
+}
+.cta .wrap { position: relative; z-index: 2; }
+.cta .tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 32px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.cta .tag::before, .cta .tag::after {
+  content: ""; width: 32px; height: 1px; background: var(--amber);
+}
+.cta h2 {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(48px, 8vw, 120px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  max-width: 16ch;
+  margin: 0 auto 48px;
+  font-variation-settings: "opsz" 144;
+}
+.cta h2 em { font-style: italic; color: var(--amber); font-weight: 300; }
+.cta p {
+  font-size: 18px;
+  color: var(--paper-dim);
+  max-width: 540px;
+  margin: 0 auto 48px;
+  line-height: 1.55;
+}
+
+.contact-form {
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  gap: 8px;
+  background: var(--ink-2);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  padding: 6px;
+  transition: border-color 0.3s ease;
+}
+.contact-form:focus-within { border-color: var(--amber); }
+.contact-form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--paper);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  padding: 14px 20px;
+  outline: none;
+}
+.contact-form input::placeholder { color: var(--paper-dimmer); }
+.contact-form button {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--paper);
+  color: var(--ink);
+  border: none;
+  padding: 14px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+  white-space: nowrap;
+}
+.contact-form button:hover { background: var(--amber); transform: translateX(2px); }
+
+.cta .or {
+  margin-top: 32px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--paper-dimmer);
+  letter-spacing: 0.05em;
+}
+.cta .or a {
+  color: var(--paper);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-strong);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.cta .or a:hover { color: var(--amber); border-color: var(--amber); }
+
+/* CTA divider — between email and schedule */
+.cta-divider {
+  max-width: 520px;
+  margin: 28px auto 24px;
+  display: flex; align-items: center; gap: 18px;
+}
+.cta-divider::before, .cta-divider::after {
+  content: ""; flex: 1; height: 1px; background: var(--rule);
+}
+.cta-divider span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--paper-dimmer);
+}
+
+/* Schedule button — primary booking CTA */
+.schedule-btn {
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex; align-items: center; gap: 18px;
+  background: var(--ink-2);
+  border: 1px solid var(--rule-strong);
+  border-radius: 16px;
+  padding: 20px 24px;
+  text-decoration: none;
+  color: var(--paper);
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+}
+.schedule-btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.schedule-btn:hover {
+  border-color: var(--amber);
+  background: var(--ink-3);
+  transform: translateY(-2px);
+}
+.schedule-btn:hover::before { opacity: 1; }
+
+.schedule-btn .schedule-icon {
+  width: 44px; height: 44px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--amber-dim);
+  color: var(--amber);
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background 0.3s ease;
+}
+.schedule-btn:hover .schedule-icon {
+  background: var(--amber);
+  color: var(--ink);
+}
+.schedule-btn .schedule-text {
+  flex: 1;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.schedule-btn .schedule-title {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--paper);
+  letter-spacing: -0.005em;
+}
+.schedule-btn .schedule-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--paper-dim);
+  text-transform: none;
+}
+.schedule-btn .schedule-arrow {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--paper-dim);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.schedule-btn:hover .schedule-arrow {
+  color: var(--amber);
+  transform: translateX(4px);
+}
+@media (max-width: 540px) {
+  .schedule-btn { padding: 16px 18px; gap: 14px; }
+  .schedule-btn .schedule-icon { width: 38px; height: 38px; }
+  .schedule-btn .schedule-title { font-size: 14px; }
+  .schedule-btn .schedule-sub { font-size: 10px; }
+}
+
+/* ----------------------------------------------------------
+   FOOTER
+---------------------------------------------------------- */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 48px 0 32px;
+  position: relative; z-index: 2;
+  background: var(--ink-2);
+}
+footer .wrap {
+  display: flex; justify-content: space-between;
+  flex-wrap: wrap; gap: 32px; align-items: flex-end;
+}
+footer .left { display: flex; flex-direction: column; gap: 16px; max-width: 380px; }
+footer .left .tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 350;
+  line-height: 1.3;
+  color: var(--paper-dim);
+}
+footer .meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--paper-dimmer);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: flex; flex-direction: column; gap: 6px;
+  text-align: right;
+}
+footer .meta a {
+  color: var(--paper-dim);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+footer .meta a:hover { color: var(--amber); }
+@media (max-width: 768px) {
+  footer .wrap { flex-direction: column; align-items: flex-start; }
+  footer .meta { text-align: left; }
+}
+
+/* ----------------------------------------------------------
+   SCROLL REVEAL ANIMATIONS
+---------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal.d1 { transition-delay: 0.08s; }
+.reveal.d2 { transition-delay: 0.16s; }
+.reveal.d3 { transition-delay: 0.24s; }
+.reveal.d4 { transition-delay: 0.32s; }
+.reveal.d5 { transition-delay: 0.4s; }
+
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="amber-glow"></div>
+<div class="amber-glow two"></div>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<nav class="top" id="topnav">
+  <div class="wrap">
+    <a href="#" class="brand">
+      <span class="mark">A</span>
+      AI <span class="slash">/</span> BUILDERS
+    </a>
+    <div class="nav-links">
+      <a href="#builds" class="desktop-only">Builds</a>
+      <a href="#capabilities" class="desktop-only">What I Build</a>
+      <a href="#process" class="desktop-only">Process</a>
+      <a href="#contact" class="nav-cta">Start a Build →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="hero" style="padding-top: 140px;">
+  <div class="wrap">
+    <div class="kicker reveal">
+      <span class="live-dot"></span>
+      <span>Currently shipping</span>
+      <span class="sep">/</span>
+      <span>Chicago, IL</span>
+    </div>
+
+    <h1 class="reveal d1">
+      AI products,<br>
+      <span class="underline"><em>shipped.</em></span>
+    </h1>
+
+    <p class="lead reveal d2">
+      A one-person AI build studio. I design, build, and ship <strong>custom AI products</strong> for real estate brokerages, finance teams, and SMBs that need to move now — not after a six-month consulting engagement.
+    </p>
+
+    <div class="hero-ctas reveal d3">
+      <a href="#contact" class="btn btn-primary">
+        Start a build <span class="arrow">→</span>
+      </a>
+      <a href="#builds" class="btn btn-secondary">
+        See live work <span class="arrow">↓</span>
+      </a>
+    </div>
+
+    <div class="hero-meta reveal d4">
+      <div class="stat">
+        <div class="num"><span class="counter" data-target="3">0</span></div>
+        <div class="label">Live products in market</div>
+      </div>
+      <div class="stat">
+        <div class="num"><span class="counter" data-target="14">0</span><span class="suffix">days</span></div>
+        <div class="label">Avg. concept → ship</div>
+      </div>
+      <div class="stat">
+        <div class="num"><span class="counter" data-target="48">0</span><span class="suffix">hrs</span></div>
+        <div class="label">To working prototype</div>
+      </div>
+      <div class="stat">
+        <div class="num"><span class="counter" data-target="100">0</span><span class="suffix">%</span></div>
+        <div class="label">Built solo, end-to-end</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MARQUEE
+============================================================ -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">CLAUDE OPUS 4.7</span>
+    <span class="marquee-item">NEXT.JS 15</span>
+    <span class="marquee-item">SUPABASE</span>
+    <span class="marquee-item">N8N AUTOMATION</span>
+    <span class="marquee-item">VERCEL</span>
+    <span class="marquee-item">TYPESCRIPT</span>
+    <span class="marquee-item">RESEND</span>
+    <span class="marquee-item">POSTGRES</span>
+    <span class="marquee-item">TAILWIND CSS</span>
+    <span class="marquee-item">OPENAI API</span>
+    <span class="marquee-item">STRIPE</span>
+    <span class="marquee-item">WEBHOOKS</span>
+    <!-- duplicated for seamless loop -->
+    <span class="marquee-item">CLAUDE OPUS 4.7</span>
+    <span class="marquee-item">NEXT.JS 15</span>
+    <span class="marquee-item">SUPABASE</span>
+    <span class="marquee-item">N8N AUTOMATION</span>
+    <span class="marquee-item">VERCEL</span>
+    <span class="marquee-item">TYPESCRIPT</span>
+    <span class="marquee-item">RESEND</span>
+    <span class="marquee-item">POSTGRES</span>
+    <span class="marquee-item">TAILWIND CSS</span>
+    <span class="marquee-item">OPENAI API</span>
+    <span class="marquee-item">STRIPE</span>
+    <span class="marquee-item">WEBHOOKS</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     BUILDS / CASE STUDIES
+============================================================ -->
+<section id="builds">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="left">
+        <div class="section-tag reveal">Selected Builds — 2024 / 2026</div>
+        <h2 class="reveal d1">Real products. <em>Real users.</em></h2>
+      </div>
+      <div class="right reveal d2">
+        Every build below is live, in market, and used by real people. No mockups, no "case studies" from work I did at someone else's company. This is the bench.
+      </div>
+    </div>
+
+    <div class="builds">
+
+      <!-- 01 -->
+      <div class="build reveal">
+        <div class="idx">01 /</div>
+        <div class="main">
+          <div class="tag">Consumer Finance</div>
+          <h3>VaultTrace</h3>
+          <div class="desc">
+            A lookup tool for forgotten 401(k)s. Users upload their IRS Wage & Income transcript and get back a structured list of every retirement account they've ever been enrolled in — pulled directly from W-2s and 1099-Rs the IRS already has on file. Built with Claude for transcript parsing, Supabase for storage, Resend for transactional email.
+          </div>
+          <div class="stack">
+            <span>Next.js</span><span>Claude API</span><span>Supabase</span><span>Resend</span><span>Vercel</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="big">100<em>%</em></div>
+          <div class="small">Of input transcripts parsed without manual review</div>
+        </div>
+        <a href="https://vaulttrace.org" target="_blank" rel="noopener" class="visit">
+          Visit <span class="arrow">↗</span>
+        </a>
+      </div>
+
+      <!-- 02 -->
+      <div class="build reveal">
+        <div class="idx">02 /</div>
+        <div class="main">
+          <div class="tag">B2B SaaS — Real Estate</div>
+          <h3>Lead Qualifier <em>for brokerages</em></h3>
+          <div class="desc">
+            An AI chat widget that drops onto any real estate brokerage site and runs full lead qualification — budget, timeline, neighborhoods, pre-approval status — in natural conversation. Scores leads Hot/Warm/Cold, fires instant email to the right agent, logs to a sheet, and can book showings on the calendar. The agent gets a complete brief in under 30 seconds.
+          </div>
+          <div class="stack">
+            <span>Claude API</span><span>N8N</span><span>Next.js</span><span>Google Sheets</span><span>Webhooks</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="big">&lt;30<em>s</em></div>
+          <div class="small">From site visit to scored lead brief in the agent's inbox</div>
+        </div>
+        <a href="#contact" class="visit">
+          Get a demo <span class="arrow">↗</span>
+        </a>
+      </div>
+
+      <!-- 03 -->
+      <div class="build reveal">
+        <div class="idx">03 /</div>
+        <div class="main">
+          <div class="tag">Internal Tooling — Trades</div>
+          <h3>Contractor <em>Finder</em></h3>
+          <div class="desc">
+            An internal research tool that takes a city + a trade (plumbers, electricians, GCs) and returns a vetted list of 15 contractors with phone, website, and a two-sentence cliff-notes summary covering specialties and reputation. Live web search routed through Claude. Cuts what used to be a half-day of Googling into a thirty-second query.
+          </div>
+          <div class="stack">
+            <span>Claude w/ Web Search</span><span>Next.js</span><span>Server Actions</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="big">15<em>×</em></div>
+          <div class="small">Contractors returned per query, fully researched</div>
+        </div>
+        <a href="#contact" class="visit">
+          Build yours <span class="arrow">↗</span>
+        </a>
+      </div>
+
+      <!-- 04 - open slot -->
+      <div class="build reveal">
+        <div class="idx">04 /</div>
+        <div class="main">
+          <div class="tag">— Open Slot —</div>
+          <h3><em>Your build, here.</em></h3>
+          <div class="desc">
+            I take on roughly two custom builds per month. If you've got a workflow that's eating up your team's time — qualifying leads, sorting documents, researching prospects, summarizing meetings — there's a strong chance it can be automated end-to-end in two weeks.
+          </div>
+          <div class="stack">
+            <span>Custom Scope</span><span>Two-Week Sprint</span><span>You Own the Code</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="big">14<em>d</em></div>
+          <div class="small">Standard sprint, from kickoff to deployed product</div>
+        </div>
+        <a href="#contact" class="visit">
+          Pitch a build <span class="arrow">↗</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CAPABILITIES
+============================================================ -->
+<section id="capabilities" style="background: var(--ink-2);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="left">
+        <div class="section-tag reveal">What I Build</div>
+        <h2 class="reveal d1">Capabilities, <em>not buzzwords.</em></h2>
+      </div>
+      <div class="right reveal d2">
+        Five categories cover ~90% of what businesses actually need from AI today. Everything else is a custom scope conversation.
+      </div>
+    </div>
+
+    <div class="caps-grid">
+      <div class="cap reveal">
+        <div class="num">/ 01</div>
+        <h4>Conversational AI &amp; Lead Qualifiers</h4>
+        <p>Chat widgets that hold real conversations with site visitors, qualify them, and route them to the right person on your team — embedded in your site as a one-line script.</p>
+        <div class="examples">
+          <span>Lead capture</span><span>Sales bots</span><span>Customer support</span>
+        </div>
+      </div>
+      <div class="cap reveal d1">
+        <div class="num">/ 02</div>
+        <h4>Document Intelligence</h4>
+        <p>Pull structured data out of unstructured documents — tax transcripts, contracts, financial statements, RFPs — and route it into your existing systems. The grunt work, automated.</p>
+        <div class="examples">
+          <span>PDF parsing</span><span>OCR</span><span>Form extraction</span><span>Contracts</span>
+        </div>
+      </div>
+      <div class="cap reveal d2">
+        <div class="num">/ 03</div>
+        <h4>Workflow Automation</h4>
+        <p>N8N and webhook-based pipelines that connect the tools you already use — Gmail, Sheets, Slack, your CRM — and remove every manual step that isn't actually decision-making.</p>
+        <div class="examples">
+          <span>N8N</span><span>Zapier</span><span>Webhooks</span><span>Cron jobs</span>
+        </div>
+      </div>
+      <div class="cap reveal d3">
+        <div class="num">/ 04</div>
+        <h4>Internal Tools &amp; Dashboards</h4>
+        <p>Custom internal apps for your team — research tools, dashboards, scorecards, deal trackers. Built fast in Next.js, deployed on Vercel, accessible to anyone on your team with a login.</p>
+        <div class="examples">
+          <span>Next.js</span><span>Supabase</span><span>Auth</span><span>Dashboards</span>
+        </div>
+      </div>
+      <div class="cap reveal d4">
+        <div class="num">/ 05</div>
+        <h4>AI Research &amp; Web Scraping</h4>
+        <p>Agents that run structured research on your behalf — vetting prospects, monitoring competitors, building target lists — and deliver the output to you in whatever format you'll actually use.</p>
+        <div class="examples">
+          <span>Web search</span><span>Scraping</span><span>Enrichment</span><span>List building</span>
+        </div>
+      </div>
+      <div class="cap reveal d5">
+        <div class="num">/ 06</div>
+        <h4>Custom — Pitch It</h4>
+        <p>If you've got a workflow that feels like it shouldn't take this long, it probably doesn't. Bring me the problem, I'll come back with a scoped build plan within 48 hours.</p>
+        <div class="examples">
+          <span>Open scope</span><span>Two-week sprint</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROCESS
+============================================================ -->
+<section id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="left">
+        <div class="section-tag reveal">How It Works</div>
+        <h2 class="reveal d1">From idea to live, <em>in two weeks.</em></h2>
+      </div>
+      <div class="right reveal d2">
+        No retainers. No 6-month engagements. No discovery decks. We talk, I build, you ship.
+      </div>
+    </div>
+
+    <div class="process">
+      <div class="step reveal">
+        <div class="num">01</div>
+        <h5>Discovery call</h5>
+        <p>30 minutes. You walk me through the workflow that's eating time. I'll tell you on the call whether it's a fit and what it'd take to build.</p>
+        <div class="time">Day 0 / 30 min</div>
+      </div>
+      <div class="step reveal d1">
+        <div class="num">02</div>
+        <h5>Scoped build plan</h5>
+        <p>Within 48 hours of the call: a written scope, fixed price, and a hard ship date. No "phase 1 of 4." One scope, one deliverable, one number.</p>
+        <div class="time">Day 1–2 / Fixed bid</div>
+      </div>
+      <div class="step reveal d2">
+        <div class="num">03</div>
+        <h5>Two-week sprint</h5>
+        <p>I build. You get a Loom every Friday showing what's done and what's next. No status meetings. No surprises on ship day.</p>
+        <div class="time">Day 3–14 / Heads down</div>
+      </div>
+      <div class="step reveal d3">
+        <div class="num">04</div>
+        <h5>Ship + handoff</h5>
+        <p>Deployed to your domain (or mine, your call). You own the code, the API keys, and the database. Two weeks of free fixes included.</p>
+        <div class="time">Day 14 / Live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT THE BUILDER
+============================================================ -->
+<section id="about" style="background: var(--ink-2);">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="section-tag">The Builder</div>
+        <h2>Built by an operator, <em>not an agency.</em></h2>
+        <p>
+          I'm <strong>Josh Panfil</strong> — Finance sophomore at USC, originally from Chicago, working out of here for the summer. By day I'm an acquisition analyst chasing CRE and SMB deals. The rest of the time I'm shipping AI products.
+        </p>
+        <p>
+          I started building because I kept watching real businesses pay real money for "AI strategy" that never turned into anything in production. So I started building the products myself, for myself, then for a handful of clients. <strong>Three live products in, the pattern's clear:</strong> most teams don't need a strategy deck. They need someone who'll actually open the editor and ship.
+        </p>
+        <p>
+          If that's where you are — you know what's broken, you want it fixed, and you don't want to manage a five-person agency to get there — we should talk.
+        </p>
+        <div class="sig">— Josh</div>
+      </div>
+
+      <div class="about-card reveal d2">
+        <div class="header">
+          <span>SYSTEM STATUS</span>
+          <span class="live">LIVE</span>
+        </div>
+        <div class="row"><span class="k">Operator</span><span class="v">Josh Panfil</span></div>
+        <div class="row"><span class="k">Base</span><span class="v">Chicago, IL</span></div>
+        <div class="row"><span class="k">School</span><span class="v">USC ’28 / Finance</span></div>
+        <div class="row"><span class="k">Day Job</span><span class="v">Acquisition Analyst</span></div>
+        <div class="row"><span class="k">Live Products</span><span class="v amber">3 → vaulttrace.org +2</span></div>
+        <div class="row"><span class="k">Avg Ship Time</span><span class="v">14 days</span></div>
+        <div class="row"><span class="k">Capacity</span><span class="v amber">2 builds open</span></div>
+        <div class="row"><span class="k">Response Time</span><span class="v">&lt; 24 hrs</span></div>
+        <div class="row"><span class="k">Stack</span><span class="v">Next · Claude · Supabase</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA / CONTACT
+============================================================ -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="tag reveal">Start Here</div>
+    <h2 class="reveal d1">Got a workflow worth <em>automating?</em></h2>
+    <p class="reveal d2">
+      Drop your email below or shoot me a note directly. I'll come back within 24 hours with whether it's a fit and what a build would look like.
+    </p>
+    <form class="contact-form reveal d3" id="leadForm" onsubmit="handleSubmit(event)">
+      <input type="email" name="email" placeholder="your@email.com" required>
+      <button type="submit">Send <span aria-hidden="true">→</span></button>
+    </form>
+
+    <div class="cta-divider reveal d3">
+      <span>or</span>
+    </div>
+
+    <a href="https://cal.com/joshpanfil/intro" target="_blank" rel="noopener" class="schedule-btn reveal d4">
+      <span class="schedule-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+      </span>
+      <span class="schedule-text">
+        <span class="schedule-title">Book a 30-min intro call</span>
+        <span class="schedule-sub">Free · Pick a time that works · No pitch deck</span>
+      </span>
+      <span class="schedule-arrow">→</span>
+    </a>
+
+    <div class="or reveal d5">
+      or email <a href="mailto:josh@aibuilders.online">josh@aibuilders.online</a> directly
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="wrap">
+    <div class="left">
+      <a href="#" class="brand">
+        <span class="mark">A</span>
+        AI <span class="slash">/</span> BUILDERS
+      </a>
+      <p class="tagline">"Build, ship, repeat. The studio for operators."</p>
+    </div>
+    <div class="meta">
+      <span>© 2026 AI / Builders</span>
+      <span>Built &amp; designed by Josh Panfil</span>
+      <a href="mailto:josh@aibuilders.online">josh@aibuilders.online</a>
+      <a href="https://vaulttrace.org" target="_blank" rel="noopener">vaulttrace.org ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// =============================================================
+// SCROLL: nav background toggle
+// =============================================================
+const nav = document.getElementById('topnav');
+const onScroll = () => {
+  if (window.scrollY > 32) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+};
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// =============================================================
+// REVEAL ON SCROLL (intersection observer)
+// =============================================================
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// =============================================================
+// ANIMATED COUNTERS (hero stats)
+// =============================================================
+const animateCounter = (el) => {
+  const target = parseInt(el.dataset.target, 10);
+  const duration = 1600;
+  const start = performance.now();
+  const tick = (now) => {
+    const t = Math.min((now - start) / duration, 1);
+    // ease-out cubic
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(target * eased).toString().padStart(2, '0');
+    if (t < 1) requestAnimationFrame(tick);
+    else el.textContent = target.toString();
+  };
+  requestAnimationFrame(tick);
+};
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+// =============================================================
+// MAGNETIC BUTTON EFFECT (subtle pull toward cursor)
+// =============================================================
+document.querySelectorAll('.btn, .nav-cta, .visit, .contact-form button').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.2}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+// =============================================================
+// CONTACT FORM (placeholder — wire to your Resend/N8N webhook)
+// =============================================================
+function handleSubmit(e) {
+  e.preventDefault();
+  const form = document.getElementById('leadForm');
+  const email = form.email.value;
+  const btn = form.querySelector('button');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = 'Sending…';
+  btn.disabled = true;
+
+  // TODO: replace with your actual endpoint (Resend / N8N webhook / Formspree)
+  // fetch('/api/lead', { method: 'POST', body: JSON.stringify({ email }) })
+  setTimeout(() => {
+    btn.innerHTML = '✓ Got it';
+    btn.style.background = 'var(--amber)';
+    form.email.value = '';
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 2400);
+  }, 800);
+}
+</script>
+
+</body>
+</html>
