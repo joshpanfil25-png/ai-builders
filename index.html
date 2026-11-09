@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI / Builders — Custom AI, Shipped</title>
-<meta name="description" content="An AI automation studio for commercial real estate, finance, and SMBs. Custom systems built end-to-end. Six live client engagements. No retainers.">
+<title>AI / Builders: AI Systems for Commercial Real Estate</title>
+<meta name="description" content="AI systems for commercial real estate operators: deal sourcing, owner research, outreach and reporting. Built by a former CRE acquisitions analyst.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -504,6 +504,36 @@ section { position: relative; padding: 140px 0; z-index: 2; }
 }
 .build .visit .arrow { transition: transform 0.25s ease; }
 .build .visit:hover .arrow { transform: translateX(3px) translateY(-3px); }
+
+.build .desc p + p { margin-top: 10px; }
+.build .desc strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 2px;
+}
+.build-group {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+  padding: 40px 0 20px;
+  border-bottom: 1px solid var(--rule);
+}
+.build-group .g-title {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(24px, 2.4vw, 34px);
+  letter-spacing: -0.015em;
+  font-style: italic;
+  color: var(--amber);
+}
+.build-group .g-sub {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
 
 @media (max-width: 900px) {
   .build { grid-template-columns: 1fr; gap: 16px; padding: 32px 0; }
@@ -1012,12 +1042,12 @@ footer .meta a:hover { color: var(--amber); }
     </div>
 
     <h1 class="reveal d1">
-      AI products,<br>
-      <span class="underline"><em>shipped.</em></span>
+      AI for commercial<br>
+      <span class="underline"><em>real estate.</em></span>
     </h1>
 
     <p class="lead reveal d2">
-      An AI automation studio for commercial real estate, finance, and SMBs. I design, build, and ship <strong>production systems</strong> that run every day — cold outreach engines, deal sourcing pipelines, back-office CRMs, market analysis tools. Systems that ship in weeks, not quarters.
+      <strong>AI systems for commercial real estate operators:</strong> deal sourcing, owner research, outreach and reporting. Built by a former acquisitions analyst. I also build for finance firms and small businesses.
     </p>
 
     <div class="hero-ctas reveal d3">
@@ -1031,20 +1061,20 @@ footer .meta a:hover { color: var(--amber); }
 
     <div class="hero-meta reveal d4">
       <div class="stat">
-        <div class="num"><span class="counter" data-target="9">0</span></div>
-        <div class="label">Systems live in client production</div>
-      </div>
-      <div class="stat">
-        <div class="num"><span class="counter" data-target="14">0</span><span class="suffix">days</span></div>
-        <div class="label">Avg. scope → shipped</div>
-      </div>
-      <div class="stat">
-        <div class="num"><span class="counter" data-target="6">0</span><span class="suffix">×</span></div>
-        <div class="label">Active client engagements</div>
+        <div class="num"><span class="counter" data-target="435">0</span><span class="suffix">K+</span></div>
+        <div class="label">Parcels screened in one county</div>
       </div>
       <div class="stat">
         <div class="num"><span class="counter" data-target="4600">0</span><span class="suffix">+</span></div>
-        <div class="label">Records processed in latest build</div>
+        <div class="label">Owner records enriched</div>
+      </div>
+      <div class="stat">
+        <div class="num"><span class="counter" data-target="3143">0</span></div>
+        <div class="label">US counties scored</div>
+      </div>
+      <div class="stat">
+        <div class="num"><span class="counter" data-target="9">0</span><span class="suffix">engine</span></div>
+        <div class="label">Deal sourcing system, architected</div>
       </div>
     </div>
   </div>
@@ -1090,19 +1120,149 @@ footer .meta a:hover { color: var(--amber); }
   <div class="wrap">
     <div class="section-head">
       <div class="left">
-        <div class="section-tag reveal">Selected Builds — 2024 / 2026</div>
-        <h2 class="reveal d1">Real products. <em>Real users.</em></h2>
+        <div class="section-tag reveal">Selected Builds, 2024 to 2026</div>
+        <h2 class="reveal d1">Built for <em>real estate operators.</em></h2>
       </div>
       <div class="right reveal d2">
-        Every build below is live in a client's production environment or my own. Real users, real numbers, real receipts. No mockups, no consulting-speak.
+        Five commercial real estate builds first, each as a problem, what I built and the output. Client work is anonymized except where noted.
       </div>
     </div>
 
     <div class="builds">
 
+      <div class="build-group reveal">
+        <span class="g-title">Commercial Real Estate</span>
+        <span class="g-sub">Deal sourcing, owner research, outreach and market analysis</span>
+      </div>
+
       <!-- 01 -->
       <div class="build reveal">
         <div class="idx">01 /</div>
+        <div class="main">
+          <div class="tag">CRE Acquisitions, Chicago</div>
+          <h3>Multi-engine deal <em>sourcing system</em></h3>
+          <div class="desc">
+            <p><strong>The problem</strong>Vision Realty Investments, a Chicago CRE and SMB acquisitions shop, was sourcing deals by hand across brokers, lenders, public records and listings.</p>
+            <p><strong>What I built</strong>I architected a nine-engine system: commercial broker outreach, bank/REO and note-buyer prospecting, foreclosure tracking, county assessor mining for owner entities, listing monitoring and direct mail.</p>
+            <p><strong>The output</strong>Every engine feeds one central pipeline tracker. Deployed in phases.</p>
+          </div>
+          <div class="stack">
+            <span>Claude API</span><span>N8N</span><span>Public Records APIs</span><span>Skip Tracing</span><span>Email Automation</span><span>Scheduled Jobs</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="big">9<em>×</em></div>
+          <div class="small">Engines architected, deployed in phases</div>
+        </div>
+        <a href="#contact" class="visit">
+          Build yours <span class="arrow">↗</span>
+        </a>
+      </div>
+
+      <!-- 02 -->
+      <div class="build reveal">
+        <div class="idx">02 /</div>
+        <div class="main">
+          <div class="tag">CRE Land, Florida · Own Account</div>
+          <h3>County-scale <em>off-market engine</em></h3>
+          <div class="desc">
+            <p><strong>The problem</strong>Underimproved commercial and industrial land on growth corridors is held by long-hold private owners who never list.</p>
+            <p><strong>What I built</strong>An engine that ingests a full county tax roll and screens parcels against a buy box (corridor, use, improvement-to-land ratio). It matches mailing addresses across LLCs to find multi-parcel owners, then tiers owners to exclude government, utilities and institutions.</p>
+            <p><strong>The output</strong>Polk County, I-4 / US-27 / SR-60 corridors: 435,650 parcels screened, 413 multi-parcel owners surfaced, a 60-owner priority call list.</p>
+          </div>
+          <div class="stack">
+            <span>County Tax Roll</span><span>Buy-Box Screening</span><span>Owner Entity Matching</span><span>Owner Tiering</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="big">435<em>K</em></div>
+          <div class="small">Parcels screened in one county</div>
+        </div>
+        <a href="#contact" class="visit">
+          Build yours <span class="arrow">↗</span>
+        </a>
+      </div>
+
+      <!-- 03 -->
+      <div class="build reveal">
+        <div class="idx">03 /</div>
+        <div class="main">
+          <div class="tag">CRE Development · Chicago-area merchant developer</div>
+          <h3>Pad-site sourcing <em>prototype</em></h3>
+          <div class="desc">
+            <p><strong>The problem</strong>A developer of restaurant pad sites needed corridor parcels inside a tight size and use band, with the real owners behind the LLCs.</p>
+            <p><strong>What I built</strong>An adapter-based pipeline on Cook County open data (Socrata): class-code and acreage filters (0.75 to 2.5 acres), a corridor radius screen, and LLC and portfolio detection. It found one family holding 4+ parcels under 3 entity names.</p>
+            <p><strong>The output</strong>28,296 Schaumburg parcels narrowed to 95 corridor candidates: 35 vacant, 60 redevelopment.</p>
+          </div>
+          <div class="stack">
+            <span>Cook County Socrata</span><span>Adapter Pipeline</span><span>LLC Detection</span><span>Portfolio Detection</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="big">95</div>
+          <div class="small">Corridor targets from 28,296 parcels</div>
+        </div>
+        <a href="#contact" class="visit">
+          Build yours <span class="arrow">↗</span>
+        </a>
+      </div>
+
+      <!-- 04 -->
+      <div class="build reveal">
+        <div class="idx">04 /</div>
+        <div class="main">
+          <div class="tag">CRE Finance · Commercial mortgage advisory firm</div>
+          <h3>Self-storage owner <em>enrichment and outreach</em></h3>
+          <div class="desc">
+            <p><strong>The problem</strong>A lender-side advisor wanted to reach self-storage owners directly across five markets, starting with only property and entity records.</p>
+            <p><strong>What I built</strong>An owner enrichment pipeline plus a three-touch outreach agent that runs from a master sheet.</p>
+            <p><strong>The output</strong>4,600+ records processed and about 1,250 verified emails recovered.</p>
+          </div>
+          <div class="stack">
+            <span>Cowork Agents</span><span>Yardi Matrix</span><span>State Corporate DBs</span><span>Google Sheets</span><span>Outlook Send</span><span>Reply Detection</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="big">27<em>%</em></div>
+          <div class="small">Email recovery rate across 4,600+ owner records</div>
+        </div>
+        <a href="#contact" class="visit">
+          Build yours <span class="arrow">↗</span>
+        </a>
+      </div>
+
+      <!-- 05 -->
+      <div class="build reveal">
+        <div class="idx">05 /</div>
+        <div class="main">
+          <div class="tag">Healthcare CRE · Chicago CRE and healthcare investor</div>
+          <h3>Nationwide skilled nursing <em>market analysis</em></h3>
+          <div class="desc">
+            <p><strong>The problem</strong>An investor wanted to find US counties with high 65+ demand and thin nursing home supply.</p>
+            <p><strong>What I built</strong>A county-level scoring model across all 3,143 US counties, with hospital-aware composite scoring and age-band breakouts (65-74, 75-84, 85+).</p>
+            <p><strong>The output</strong>A ranked top 200, a top 25 deep dive and market playbooks for the top 30.</p>
+          </div>
+          <div class="stack">
+            <span>CMS Data</span><span>Census ACS</span><span>Medicare Claims</span><span>Python</span><span>OpenPyXL</span><span>Composite Scoring</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="big">3,143<em>×</em></div>
+          <div class="small">Counties scored and ranked nationwide</div>
+        </div>
+        <a href="#contact" class="visit">
+          Build yours <span class="arrow">↗</span>
+        </a>
+      </div>
+
+      <div class="build-group reveal">
+        <span class="g-title">Other Builds</span>
+        <span class="g-sub">Finance, consumer products, internal tools and back-office</span>
+      </div>
+
+      <!-- 01 -->
+      <div class="build reveal">
+        <div class="idx">06 /</div>
         <div class="main">
           <div class="tag">Consumer Finance</div>
           <h3>VaultTrace</h3>
@@ -1119,116 +1279,6 @@ footer .meta a:hover { color: var(--amber); }
         </div>
         <a href="https://vaulttrace.org" target="_blank" rel="noopener" class="visit">
           Visit <span class="arrow">↗</span>
-        </a>
-      </div>
-
-      <!-- 02 -->
-      <div class="build reveal">
-        <div class="idx">02 /</div>
-        <div class="main">
-          <div class="tag">SMB Acquisitions — Production Deployment</div>
-          <h3>Multi-engine deal <em>sourcing system</em></h3>
-          <div class="desc">
-            A nine-engine operational system built for Vision Realty Investments, a Chicago-based commercial real estate and SMB acquisitions firm. Engines span the full deal-sourcing funnel — broker outreach, bank and note-buyer prospecting, foreclosure tracking, public records mining, CRExi/LoopNet monitoring, and direct mail orchestration. Each engine runs independently, feeds a central deal pipeline, and surfaces qualified targets daily without manual intervention.
-          </div>
-          <div class="stack">
-            <span>Claude API</span><span>N8N</span><span>Public Records APIs</span><span>Skip Tracing</span><span>Email Automation</span><span>Scheduled Jobs</span>
-          </div>
-        </div>
-        <div class="metric">
-          <div class="big">9<em>×</em></div>
-          <div class="small">Engines architected end-to-end · live in production</div>
-        </div>
-        <a href="#contact" class="visit">
-          Build yours <span class="arrow">↗</span>
-        </a>
-      </div>
-
-      <!-- 03 -->
-      <div class="build reveal">
-        <div class="idx">03 /</div>
-        <div class="main">
-          <div class="tag">CRE Finance — Outreach at Scale</div>
-          <h3>Self-storage owner <em>outreach system</em></h3>
-          <div class="desc">
-            A five-market cold outreach system for a commercial mortgage advisor targeting self-storage owners. Yardi Matrix property data pulled and normalized across IL, TX, CA, FL, and the Northeast, deduped and filtered to owner-level records, then run through a two-pass Cowork enrichment pipeline that resolves LLCs to named principals via state corporate databases. A three-touch email sequence sends daily on the client's mailbox, with reply detection auto-suspending future touches per contact.
-          </div>
-          <div class="stack">
-            <span>Cowork Agents</span><span>Yardi Matrix</span><span>State Corporate DBs</span><span>Google Sheets</span><span>Outlook Send</span><span>Reply Detection</span>
-          </div>
-        </div>
-        <div class="metric">
-          <div class="big">27<em>%</em></div>
-          <div class="small">Email recovery rate across 4,627 owner records</div>
-        </div>
-        <a href="#contact" class="visit">
-          Build yours <span class="arrow">↗</span>
-        </a>
-      </div>
-
-      <!-- 04 -->
-      <div class="build reveal">
-        <div class="idx">04 /</div>
-        <div class="main">
-          <div class="tag">B2B Advisory — Back-Office CRM</div>
-          <h3>Full-stack CRM &amp; <em>follow-up agent</em></h3>
-          <div class="desc">
-            A complete back-office rebuild for a tourism advisory firm. Contact import, native Gmail sync, Calendly integration, Fireflies meeting transcription, and a six-stage sales pipeline wired into Attio as the system of record. On top of that, a Cowork follow-up agent that reads the Attio timeline, detects stage per contact, and sends the correct sequence email through the client's mailbox — with hard guardrails against double-sends, wrong-stage sends, and reply overrides.
-          </div>
-          <div class="stack">
-            <span>Attio CRM</span><span>Cowork Agents</span><span>Zapier</span><span>Fireflies</span><span>Calendly</span><span>Gmail Sync</span>
-          </div>
-        </div>
-        <div class="metric">
-          <div class="big">227<em>×</em></div>
-          <div class="small">Contacts staged and sequenced end-to-end</div>
-        </div>
-        <a href="#contact" class="visit">
-          Build yours <span class="arrow">↗</span>
-        </a>
-      </div>
-
-      <!-- 05 -->
-      <div class="build reveal">
-        <div class="idx">05 /</div>
-        <div class="main">
-          <div class="tag">Healthcare CRE — Market Screening</div>
-          <h3>Nationwide market <em>opportunity engine</em></h3>
-          <div class="desc">
-            A two-phase market screening system for a healthcare real estate buyer. Phase 1 ranked every US county by 65+ population density against nursing home bed supply using CMS and Census data. Phase 2 added hospital-aware composite scoring using Medicare discharge volumes and proximity data, expanded age band segmentation across three cohorts, seven analytical enrichments (workforce supply, CON regulatory detail, payer mix, closure flags), and operational playbooks for the top thirty markets. The composite scoring completely inverted the Phase 1 rankings — the kind of finding that only shows up when the analysis is done right.
-          </div>
-          <div class="stack">
-            <span>CMS Data</span><span>Census ACS</span><span>Medicare Claims</span><span>Python</span><span>OpenPyXL</span><span>Composite Scoring</span>
-          </div>
-        </div>
-        <div class="metric">
-          <div class="big">3,143<em>×</em></div>
-          <div class="small">Counties scored and ranked nationwide</div>
-        </div>
-        <a href="#contact" class="visit">
-          Build yours <span class="arrow">↗</span>
-        </a>
-      </div>
-
-      <!-- 06 -->
-      <div class="build reveal">
-        <div class="idx">06 /</div>
-        <div class="main">
-          <div class="tag">B2B SaaS — Real Estate</div>
-          <h3>Lead Qualifier <em>for brokerages</em></h3>
-          <div class="desc">
-            An AI chat widget that drops onto any real estate brokerage site and runs full lead qualification — budget, timeline, neighborhoods, pre-approval status — in natural conversation. Scores leads Hot/Warm/Cold, fires instant email to the right agent, logs to a sheet, and can book showings on the calendar. The agent gets a complete brief in under 30 seconds.
-          </div>
-          <div class="stack">
-            <span>Claude API</span><span>N8N</span><span>Next.js</span><span>Google Sheets</span><span>Webhooks</span>
-          </div>
-        </div>
-        <div class="metric">
-          <div class="big">&lt;30<em>s</em></div>
-          <div class="small">From site visit to scored lead brief in the agent's inbox</div>
-        </div>
-        <a href="#contact" class="visit">
-          Get a demo <span class="arrow">↗</span>
         </a>
       </div>
 
@@ -1254,9 +1304,31 @@ footer .meta a:hover { color: var(--amber); }
         </a>
       </div>
 
-      <!-- 08 -->
+      <!-- 06 -->
       <div class="build reveal">
         <div class="idx">08 /</div>
+        <div class="main">
+          <div class="tag">B2B SaaS — Real Estate</div>
+          <h3>Lead Qualifier <em>for brokerages</em></h3>
+          <div class="desc">
+            An AI chat widget that drops onto any real estate brokerage site and runs full lead qualification — budget, timeline, neighborhoods, pre-approval status — in natural conversation. Scores leads Hot/Warm/Cold, fires instant email to the right agent, logs to a sheet, and can book showings on the calendar. The agent gets a complete brief in under 30 seconds.
+          </div>
+          <div class="stack">
+            <span>Claude API</span><span>N8N</span><span>Next.js</span><span>Google Sheets</span><span>Webhooks</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="big">&lt;30<em>s</em></div>
+          <div class="small">From site visit to scored lead brief in the agent's inbox</div>
+        </div>
+        <a href="#contact" class="visit">
+          Get a demo <span class="arrow">↗</span>
+        </a>
+      </div>
+
+      <!-- 08 -->
+      <div class="build reveal">
+        <div class="idx">09 /</div>
         <div class="main">
           <div class="tag">Internal Tooling — Trades</div>
           <h3>Contractor <em>Finder</em></h3>
@@ -1276,9 +1348,31 @@ footer .meta a:hover { color: var(--amber); }
         </a>
       </div>
 
+      <!-- 04 -->
+      <div class="build reveal">
+        <div class="idx">10 /</div>
+        <div class="main">
+          <div class="tag">B2B Advisory — Back-Office CRM</div>
+          <h3>Full-stack CRM &amp; <em>follow-up agent</em></h3>
+          <div class="desc">
+            A complete back-office rebuild for a tourism advisory firm. Contact import, native Gmail sync, Calendly integration, Fireflies meeting transcription, and a six-stage sales pipeline wired into Attio as the system of record. On top of that, a Cowork follow-up agent that reads the Attio timeline, detects stage per contact, and sends the correct sequence email through the client's mailbox — with hard guardrails against double-sends, wrong-stage sends, and reply overrides.
+          </div>
+          <div class="stack">
+            <span>Attio CRM</span><span>Cowork Agents</span><span>Zapier</span><span>Fireflies</span><span>Calendly</span><span>Gmail Sync</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="big">227<em>×</em></div>
+          <div class="small">Contacts staged and sequenced end-to-end</div>
+        </div>
+        <a href="#contact" class="visit">
+          Build yours <span class="arrow">↗</span>
+        </a>
+      </div>
+
       <!-- 09 - open slot -->
       <div class="build reveal">
-        <div class="idx">09 /</div>
+        <div class="idx">11 /</div>
         <div class="main">
           <div class="tag">— Open Slot —</div>
           <h3><em>Your build, here.</em></h3>
@@ -1424,13 +1518,10 @@ footer .meta a:hover { color: var(--amber); }
         <div class="section-tag">The Builder</div>
         <h2>Built by an operator, <em>not an agency.</em></h2>
         <p>
-          I'm <strong>Josh Panfil</strong> — junior at USC studying finance, originally from the Chicago suburbs. Prior acquisition analyst work in commercial real estate, now running Engine 8 full-time alongside school. Six active client engagements across CRE, finance, and healthcare, plus co-founding a consumer product on the side.
+          I'm <strong>Josh Panfil</strong>, an economics student at the University of South Carolina and a former acquisitions analyst at <strong>Vision Realty Investments</strong> in Chicago. I build tools for CRE operators, focused on deal sourcing, underwriting and asset-level reporting.
         </p>
         <p>
-          I started building because I kept watching real operators pay real money for "AI strategy" decks that never turned into anything in production. So I started building the systems myself — for my own use first, then for clients who wanted the same. <strong>The pattern's the same every time:</strong> most teams don't need a strategy deck. They need someone who'll open the editor, ship the system, and stay accountable to whether it actually works.
-        </p>
-        <p>
-          Every build lives in the client's own account, on the client's own domain, using the client's own API keys. You own the code, you own the data, you can fire me tomorrow and nothing breaks. That's the model. If that's the deal you want, we should talk.
+          Every build lives in the client's own account, with the client's own API keys. You own the code and the data.
         </p>
         <div class="sig">— Josh</div>
       </div>
@@ -1443,8 +1534,8 @@ footer .meta a:hover { color: var(--amber); }
         <div class="row"><span class="k">Operator</span><span class="v">Josh Panfil</span></div>
         <div class="row"><span class="k">Studio</span><span class="v">Engine 8</span></div>
         <div class="row"><span class="k">Base</span><span class="v">Columbia, SC / Chicago, IL</span></div>
-        <div class="row"><span class="k">School</span><span class="v">USC ’28 / Finance</span></div>
-        <div class="row"><span class="k">Prior</span><span class="v">CRE Acquisition Analyst</span></div>
+        <div class="row"><span class="k">School</span><span class="v">USC ’28 / Economics</span></div>
+        <div class="row"><span class="k">Prior</span><span class="v">Acquisitions Analyst, Vision Realty</span></div>
         <div class="row"><span class="k">Active Engagements</span><span class="v amber">6 clients</span></div>
         <div class="row"><span class="k">Verticals</span><span class="v">CRE · Finance · SMB</span></div>
         <div class="row"><span class="k">Avg Ship Time</span><span class="v">14 days</span></div>
@@ -1554,9 +1645,9 @@ const animateCounter = (el) => {
     const t = Math.min((now - start) / duration, 1);
     // ease-out cubic
     const eased = 1 - Math.pow(1 - t, 3);
-    el.textContent = Math.round(target * eased).toString().padStart(2, '0');
+    el.textContent = Math.round(target * eased).toLocaleString('en-US');
     if (t < 1) requestAnimationFrame(tick);
-    else el.textContent = target.toString();
+    else el.textContent = target.toLocaleString('en-US');
   };
   requestAnimationFrame(tick);
 };
